@@ -1,61 +1,63 @@
-import { buildPalette, colorMix, hexToRgb, rgbToHex } from "./color";
+import { isColorValue, lerpColor, lerpRgb, parseHex, rgbToHex } from "./color";
 
-describe("hexToRgb", () => {
-  it("converts 6-digit hex", () => {
-    expect(hexToRgb("#ff1493")).toEqual([255, 20, 147]);
+describe("parseHex", () => {
+  it("parses 6-digit hex", () => {
+    expect(parseHex("#ff0000")).toEqual([255, 0, 0]);
   });
 
-  it("converts 3-digit hex", () => {
-    expect(hexToRgb("#f00")).toEqual([255, 0, 0]);
+  it("parses 3-digit hex", () => {
+    expect(parseHex("#f00")).toEqual([255, 0, 0]);
   });
 
-  it("handles without hash", () => {
-    expect(hexToRgb("5E70F8")).toEqual([94, 112, 248]);
+  it("handles no hash prefix", () => {
+    expect(parseHex("00ff00")).toEqual([0, 255, 0]);
+  });
+
+  it("returns white for invalid input", () => {
+    expect(parseHex("")).toEqual([255, 255, 255]);
   });
 });
 
 describe("rgbToHex", () => {
-  it("converts rgb to hex", () => {
-    expect(rgbToHex([255, 20, 147])).toBe("#ff1493");
-  });
-
-  it("pads single digit values", () => {
-    expect(rgbToHex([0, 0, 0])).toBe("#000000");
+  it("converts RGB to hex", () => {
+    expect(rgbToHex([255, 0, 128])).toBe("#ff0080");
   });
 });
 
-describe("colorMix", () => {
-  it("transparent target returns rgba", () => {
-    expect(colorMix([255, 0, 0], 50, "transparent")).toBe("rgba(255,0,0,0.5)");
+describe("lerpRgb", () => {
+  it("returns start at t=0", () => {
+    expect(lerpRgb([0, 0, 0], [255, 255, 255], 0)).toEqual([0, 0, 0]);
   });
 
-  it("white target blends toward white", () => {
-    // 50% of 0 + 50% of 255 = 128 (rounded)
-    expect(colorMix([0, 0, 0], 50, "white")).toBe("rgb(128,128,128)");
+  it("returns end at t=1", () => {
+    expect(lerpRgb([0, 0, 0], [255, 255, 255], 1)).toEqual([255, 255, 255]);
   });
 
-  it("white target at 100% returns the color", () => {
-    expect(colorMix([255, 0, 0], 100, "white")).toBe("rgb(255,0,0)");
-  });
-
-  it("white target at 0% returns white", () => {
-    expect(colorMix([255, 0, 0], 0, "white")).toBe("rgb(255,255,255)");
-  });
-
-  it("black target blends toward black", () => {
-    expect(colorMix([255, 255, 255], 50, "black")).toBe("rgb(128,128,128)");
-  });
-
-  it("defaults to transparent", () => {
-    expect(colorMix([100, 200, 50], 30)).toBe("rgba(100,200,50,0.3)");
+  it("interpolates midpoint", () => {
+    const result = lerpRgb([0, 0, 0], [100, 200, 50], 0.5);
+    expect(result[0]).toBeCloseTo(50);
+    expect(result[1]).toBeCloseTo(100);
+    expect(result[2]).toBeCloseTo(25);
   });
 });
 
-describe("buildPalette", () => {
-  it("returns rgb and helper functions", () => {
-    const p = buildPalette("#ff0000");
-    expect(p.rgb).toEqual([255, 0, 0]);
-    expect(p.transparent(50)).toBe("rgba(255,0,0,0.5)");
-    expect(p.white(0)).toBe("rgb(255,255,255)");
+describe("lerpColor", () => {
+  it("interpolates between hex colors", () => {
+    const mid = lerpColor("#000000", "#ffffff", 0.5);
+    expect(mid).toBe("rgb(128,128,128)");
+  });
+});
+
+describe("isColorValue", () => {
+  it("detects hex strings", () => {
+    expect(isColorValue("#ff0000")).toBe(true);
+  });
+
+  it("rejects numbers", () => {
+    expect(isColorValue(42)).toBe(false);
+  });
+
+  it("rejects non-hex strings", () => {
+    expect(isColorValue("hello")).toBe(false);
   });
 });

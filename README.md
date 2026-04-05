@@ -1,83 +1,98 @@
-# css-cover-art
+# loopkit
 
-Schema-driven cover art engine. Define covers as JSON/TypeScript objects, render to HTML with inline styles and hover animations. Zero dependencies.
+Lightweight, zero-dependency SVG animation engine for the web. Define animations as plain JS objects, get smooth `requestAnimationFrame`-driven playback.
+
+Built as a Lottie alternative for short decorative animations — cover art, hero graphics, hover effects. Under 5KB minified.
 
 ## Install
 
 ```bash
-npm install css-cover-art
+npm install loopkit
 ```
 
-## Usage
+## Quick start
 
-```ts
-import { createCover } from "css-cover-art";
+```typescript
+import { createAnimation } from 'loopkit';
 
-const cover = createCover({
-  color: "#5E70F8",
-  width: 600,
-  height: 400,
-  background: { angle: 135, stops: [{ mix: 12 }, { mix: 5 }, { mix: 14 }] },
+const anim = createAnimation(document.getElementById('cover'), {
+  width: 460,
+  height: 280,
+  background: '#0c1222',
+  stagger: 0.45,
+  trigger: 'hover',
+  hold: 3.5,
   elements: [
-    { type: "grid", cols: 2, rows: 2, inset: 12, cellRadius: 8,
-      labels: ["S", "O", "A", "P"],
-      cellLines: [[80, 65], [70, 85], [90, 60], [75, 85]] },
-    { type: "circle", x: "90%", y: "90%", size: 56, mix: 15,
-      hover: { scale: 1.3, opacity: 0.9 } },
-  ],
-  blicks: [
-    { shape: "diamond", x: "94%", y: "6%", w: 12, mix: 40,
-      hover: { scale: 1.5, rotate: 90 } },
+    {
+      type: 'text',
+      content: 'Subjective',
+      style: { x: 48, y: 72, fontSize: 28, color: '#334155' },
+      animate: {
+        opacity: [0.2, 1],
+        color: ['#334155', '#34d399'],
+        sequence: 0,
+        duration: 0.5,
+        easing: 'ease-out',
+      },
+    },
+    {
+      type: 'rect',
+      style: { x: 28, y: 44, width: 3, height: 0, fill: '#34d399' },
+      animate: {
+        height: [0, 180],
+        sequence: 0,
+        duration: 2.8,
+        easing: 'ease-out',
+      },
+    },
   ],
 });
 
-cover.html;      // Full HTML with <style> block for hover
-cover.style;     // { position, width, height, overflow, background }
-cover.innerHtml; // Elements + blicks without container
-cover.hoverCss;  // CSS hover animation rules
-cover.coverId;   // Unique data-cover attribute value
+anim.play();     // Start playback
+anim.pause();    // Freeze at current frame
+anim.reset();    // Snap to final frame
+anim.settle();   // Smoothly animate to final frame
+anim.destroy();  // Remove SVG, cancel rAF, clean up
 ```
 
-Same schema = same output. One hex color drives the entire palette via opacity variations.
+## Features
+
+- **Schema in, animation out** — declarative JSON-like schema defines elements and keyframes
+- **SVG renderer** — creates and updates SVG DOM via `requestAnimationFrame`
+- **Zero dependencies** — vanilla TypeScript, <5KB minified
+- **Two triggers** — `autoplay` (infinite loop) or `hover` (loop on enter, smooth settle on leave)
+- **Smooth transitions** — starts at final frame (no flash), fades out before restarting, settles smoothly on hover leave
+- **SSR support** — `renderToString()` outputs SVG markup at final frame, no DOM required
+- **Color interpolation** — hex color animation with RGB lerp
 
 ## Element types
 
-| Type | What it renders |
-|------|-----------------|
-| `grid` | Labeled grids, calendars, matrices |
-| `skeleton` | Document lines, text placeholders |
-| `circle` | Avatars, dots, rings |
-| `rect` | Cards, panels, image blocks |
-| `bar-chart` | Vertical bar charts |
-| `polyline` | Line/area charts |
-| `diamond` | Decorative accent shapes |
-| `stack` | Layered cards, stacked panels |
-| `flex-column` | Timeline feeds, vertical lists |
-| `text-grid` | Character/symbol grids |
+| Type | SVG output | Key properties |
+|------|------------|----------------|
+| `text` | `<text>` | x, y, fontSize, color, opacity, fontWeight, textAnchor |
+| `rect` | `<rect>` | x, y, width, height, fill, opacity, rx |
+| `circle` | `<circle>` | cx, cy, r, fill, opacity, scale |
+| `badge` | `<g>` with shape + centered text | x, y, r, bg, color, scale, opacity, isLabel |
 
-## Color theming
+## SSR
 
-One color drives everything. The package replaces CSS `color-mix()` with computed RGBA values:
+```typescript
+import { renderToString } from 'loopkit';
 
-```ts
-import { colorMix, hexToRgb } from "css-cover-art";
-
-colorMix([94, 112, 248], 15, "transparent"); // rgba(94,112,248,0.15)
-colorMix([94, 112, 248], 12, "white");       // blended toward white
+const svgMarkup = renderToString(schema);
+// Returns <svg>...</svg> at final frame — no DOM needed
 ```
 
 ## Docs
 
-- [API Reference](docs/api.md)
-- [Elements](docs/elements.md)
-- [Color Theming](docs/color-theming.md)
-- [Hover Animations](docs/hover.md)
-- [Examples](docs/examples/)
+- [Comprehensive Guide](docs/guide.md) — full walkthrough of concepts, timing, design patterns, and recipes
+- [API Reference](docs/api.md) — all methods, types, and parameters
+- [Examples](docs/examples/) — 46 real-world cover schemas with explanations
 
 ## About
 
 Built and maintained by [Jurij Tokarski](https://varstatt.com/jurij) from [Varstatt](https://varstatt.com). MIT licensed.
 
-- [GitHub](https://github.com/varstatt/css-cover-art)
-- [npm](https://www.npmjs.com/package/css-cover-art)
-- [Issues](https://github.com/varstatt/css-cover-art/issues)
+- [GitHub](https://github.com/varstatt/loopkit)
+- [npm](https://www.npmjs.com/package/loopkit)
+- [Issues](https://github.com/varstatt/loopkit/issues)

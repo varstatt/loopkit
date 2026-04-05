@@ -1,12 +1,12 @@
 # Contributing
 
-Thanks for your interest in contributing to PACKAGE_NAME.
+Thanks for your interest in contributing to loopkit.
 
 ## Getting started
 
 ```bash
-git clone https://github.com/varstatt/PACKAGE_NAME.git
-cd PACKAGE_NAME
+git clone https://github.com/varstatt/loopkit.git
+cd loopkit
 npm install
 ```
 
@@ -44,4 +44,4 @@ Releases are automated via GitHub Actions. When a new GitHub release is created,
 
 ## Issues
 
-Found a bug or have a feature request? [Open an issue](https://github.com/varstatt/PACKAGE_NAME/issues).
+Found a bug or have a feature request? [Open an issue](https://github.com/varstatt/loopkit/issues).

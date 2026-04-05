@@ -1,32 +1,32 @@
 {
-  "name": "css-cover-art",
-  "version": "0.5.0",
-  "description": "Schema-driven cover art engine. Define covers as data, render to SVG, HTML, CSS, or React styles.",
+  "name": "loopkit",
+  "version": "0.1.0",
+  "description": "Lightweight schema-driven SVG animation engine. Define animations as data, render to DOM or string. Zero dependencies.",
   "keywords": [
-    "cover-art",
     "svg",
-    "generative",
+    "animation",
+    "motion",
+    "lottie-alternative",
     "schema",
-    "css",
-    "illustration",
-    "background",
-    "data-visualization"
+    "cover-art",
+    "live-graphics",
+    "lightweight"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/varstatt/css-cover-art.git"
+    "url": "git+https://github.com/varstatt/loopkit.git"
   },
-  "homepage": "https://github.com/varstatt/css-cover-art#readme",
+  "homepage": "https://github.com/varstatt/loopkit#readme",
   "bugs": {
-    "url": "https://github.com/varstatt/css-cover-art/issues"
+    "url": "https://github.com/varstatt/loopkit/issues"
   },
   "author": "Jurij Tokarski <jurij@varstatt.com>",
   "license": "MIT",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     }
@@ -58,6 +58,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^22.0.0",
     "jest": "^30.0.0",
+    "jest-environment-jsdom": "^30.0.0",
     "ts-jest": "^29.4.0",
     "typescript": "^5.8.0"
   }
