@@ -2,41 +2,33 @@
 
 > **Live demo:** [varstatt.com/discovery](https://varstatt.com/discovery)
 
-A 2x2 priority matrix grid with three scatter dots representing plotted features. Rose/pink palette on a blush background.
+A 2x2 priority matrix with four scatter dots representing plotted features. Rose/pink palette on a blush background, centered on a 460x280 canvas. No axis lines — the quadrant fills alone communicate the grid.
 
 ## Schema
 
 ```js
 export const featurePrioritization = {
-  width: 280, height: 280, background: '#ffe4e6',
-  stagger: 0.35, trigger: 'autoplay', hold: 2,
+  width: 460, height: 280, background: '#ffe4e6',
+  stagger: 0.3, trigger: 'hover',
   elements: [
     // 2x2 grid quadrants
-    { type: 'rect', style: { x: 30, y: 30, width: 105, height: 105, fill: '#fecdd3', rx: 8, opacity: 0.7 }, animate: { opacity: [0, 0.7], sequence: 0, duration: 0.5, easing: 'ease-out' } },
-    { type: 'rect', style: { x: 145, y: 30, width: 105, height: 105, fill: '#fda4af', rx: 8, opacity: 0.7 }, animate: { opacity: [0, 0.7], sequence: 0, duration: 0.5, easing: 'ease-out' } },
-    { type: 'rect', style: { x: 30, y: 145, width: 105, height: 105, fill: '#fda4af', rx: 8, opacity: 0.7 }, animate: { opacity: [0, 0.7], sequence: 0, duration: 0.5, easing: 'ease-out' } },
-    { type: 'rect', style: { x: 145, y: 145, width: 105, height: 105, fill: '#fecdd3', rx: 8, opacity: 0.7 }, animate: { opacity: [0, 0.7], sequence: 0, duration: 0.5, easing: 'ease-out' } },
-
-    // Axis lines
-    { type: 'rect', style: { x: 30, y: 139, width: 220, height: 2, fill: '#fb7185', rx: 1, opacity: 0.5 }, animate: { width: [0, 220], opacity: [0, 0.5], sequence: 1, duration: 0.5, easing: 'ease-out' } },
-    { type: 'rect', style: { x: 139, y: 30, width: 2, height: 220, fill: '#fb7185', rx: 1, opacity: 0.5 }, animate: { height: [0, 220], opacity: [0, 0.5], sequence: 1, duration: 0.5, easing: 'ease-out' } },
-
-    // Scatter dot 1 (top-right quadrant -- high value, low effort)
-    { type: 'circle', style: { cx: 195, cy: 68, r: 12, fill: '#e11d48', opacity: 0.85 }, animate: { scale: [0, 1], opacity: [0, 0.85], sequence: 2, duration: 0.4, easing: 'ease-out' } },
-
-    // Scatter dot 2 (top-left quadrant)
-    { type: 'circle', style: { cx: 72, cy: 85, r: 10, fill: '#f43f5e', opacity: 0.75 }, animate: { scale: [0, 1], opacity: [0, 0.75], sequence: 3, duration: 0.4, easing: 'ease-out' } },
-
-    // Scatter dot 3 (bottom-right quadrant)
-    { type: 'circle', style: { cx: 205, cy: 200, r: 10, fill: '#f43f5e', opacity: 0.75 }, animate: { scale: [0, 1], opacity: [0, 0.75], sequence: 4, duration: 0.4, easing: 'ease-out' } },
+    { type: 'rect', style: { x: 82, y: 42, width: 140, height: 90, fill: '#fecdd3', rx: 10, opacity: 0.6 }, animate: { opacity: [0, 0.6], sequence: 0, duration: 0.5, easing: 'ease-out' } },
+    { type: 'rect', style: { x: 238, y: 42, width: 140, height: 90, fill: '#fda4af', rx: 10, opacity: 0.6 }, animate: { opacity: [0, 0.6], sequence: 0, duration: 0.5, easing: 'ease-out' } },
+    { type: 'rect', style: { x: 82, y: 148, width: 140, height: 90, fill: '#fda4af', rx: 10, opacity: 0.6 }, animate: { opacity: [0, 0.6], sequence: 0, duration: 0.5, easing: 'ease-out' } },
+    { type: 'rect', style: { x: 238, y: 148, width: 140, height: 90, fill: '#fecdd3', rx: 10, opacity: 0.6 }, animate: { opacity: [0, 0.6], sequence: 0, duration: 0.5, easing: 'ease-out' } },
+    // Scatter dots
+    { type: 'circle', style: { cx: 152, cy: 82, r: 10, fill: '#e11d48', opacity: 0.5 }, animate: { scale: [0, 1], opacity: [0, 0.5], sequence: 1, duration: 0.4, easing: 'ease-out' } },
+    { type: 'circle', style: { cx: 320, cy: 100, r: 8, fill: '#f43f5e', opacity: 0.4 }, animate: { scale: [0, 1], opacity: [0, 0.4], sequence: 2, duration: 0.4, easing: 'ease-out' } },
+    { type: 'circle', style: { cx: 140, cy: 195, r: 9, fill: '#f43f5e', opacity: 0.35 }, animate: { scale: [0, 1], opacity: [0, 0.35], sequence: 3, duration: 0.4, easing: 'ease-out' } },
+    { type: 'circle', style: { cx: 290, cy: 180, r: 7, fill: '#fb7185', opacity: 0.3 }, animate: { scale: [0, 1], opacity: [0, 0.3], sequence: 4, duration: 0.4, easing: 'ease-out' } },
   ],
 };
 ```
 
 ## Design decisions
 
-- **Stagger 0.35s** separates the two phases: the grid appears first (sequence 0), axes draw in (sequence 1), then dots pop in one by one (sequences 2--4).
-- All four quadrants share sequence 0 so the matrix background appears as a single unit before the data lands on it.
-- The top-right dot is slightly larger (`r: 12`) and uses a deeper rose (`#e11d48`) to visually mark it as the "quick win" quadrant -- high impact, low effort.
-- Alternating `#fecdd3` and `#fda4af` quadrant fills create a diagonal pattern suggesting the effort/impact axes.
-- Dots use `scale: [0, 1]` to pop from nothing, giving them an energetic "plotted" feeling.
+- **No axis lines** — the alternating `#fecdd3` / `#fda4af` quadrant fills create a diagonal pattern that implies the effort/impact axes without needing drawn lines.
+- All four quadrants share sequence 0 so the grid appears as a single unit before dots land.
+- Four dots (up from three) spread across all quadrants, with varying sizes (`r: 7--10`) and opacities to suggest different priority levels.
+- The top-left dot is largest and deepest rose (`#e11d48`, `r: 10`), visually marking the "quick win" quadrant.
+- Quadrants are centered on the 460px canvas: two columns at `x: 82` and `x: 238`, two rows at `y: 42` and `y: 148`, each 140x90.

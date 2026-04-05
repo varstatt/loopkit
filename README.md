@@ -19,32 +19,28 @@ const anim = createAnimation(document.getElementById('cover'), {
   width: 460,
   height: 280,
   background: '#0c1222',
-  stagger: 0.45,
+  stagger: 0.35,
   trigger: 'hover',
-  hold: 3.5,
+  hold: 2,
   elements: [
-    {
-      type: 'text',
-      content: 'Subjective',
-      style: { x: 48, y: 72, fontSize: 28, color: '#334155' },
-      animate: {
-        opacity: [0.2, 1],
-        color: ['#334155', '#34d399'],
-        sequence: 0,
-        duration: 0.5,
-        easing: 'ease-out',
-      },
-    },
-    {
-      type: 'rect',
-      style: { x: 28, y: 44, width: 3, height: 0, fill: '#34d399' },
-      animate: {
-        height: [0, 180],
-        sequence: 0,
-        duration: 2.8,
-        easing: 'ease-out',
-      },
-    },
+    // Four bars growing upward
+    { type: 'rect', style: { x: 97, y: 200, width: 55, height: 0, fill: '#06b6d4', opacity: 0 },
+      animate: { height: [0, 120], y: [200, 80], opacity: [0, 0.5], sequence: 0, duration: 0.8, easing: 'ease-out' } },
+    { type: 'rect', style: { x: 167, y: 200, width: 55, height: 0, fill: '#06b6d4', opacity: 0 },
+      animate: { height: [0, 90], y: [200, 110], opacity: [0, 0.4], sequence: 1, duration: 0.8, easing: 'ease-out' } },
+    { type: 'rect', style: { x: 237, y: 200, width: 55, height: 0, fill: '#06b6d4', opacity: 0 },
+      animate: { height: [0, 150], y: [200, 50], opacity: [0, 0.6], sequence: 2, duration: 0.8, easing: 'ease-out' } },
+    { type: 'rect', style: { x: 307, y: 200, width: 55, height: 0, fill: '#06b6d4', opacity: 0 },
+      animate: { height: [0, 70], y: [200, 130], opacity: [0, 0.35], sequence: 3, duration: 0.8, easing: 'ease-out' } },
+    // Labels
+    { type: 'text', content: '$2.4k', style: { x: 124, y: 72, fontSize: 11, color: '#06b6d4', textAnchor: 'middle', opacity: 0 },
+      animate: { opacity: [0, 0.5], sequence: 0, duration: 0.4 } },
+    { type: 'text', content: '$1.8k', style: { x: 194, y: 102, fontSize: 11, color: '#06b6d4', textAnchor: 'middle', opacity: 0 },
+      animate: { opacity: [0, 0.4], sequence: 1, duration: 0.4 } },
+    { type: 'text', content: '$3.1k', style: { x: 264, y: 42, fontSize: 11, color: '#06b6d4', textAnchor: 'middle', opacity: 0 },
+      animate: { opacity: [0, 0.6], sequence: 2, duration: 0.4 } },
+    { type: 'text', content: '$1.2k', style: { x: 334, y: 122, fontSize: 11, color: '#06b6d4', textAnchor: 'middle', opacity: 0 },
+      animate: { opacity: [0, 0.35], sequence: 3, duration: 0.4 } },
   ],
 });
 
