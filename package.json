@@ -1,6 +1,6 @@
 {
   "name": "loopkit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lightweight schema-driven SVG animation engine. Define animations as data, render to DOM or string. Zero dependencies.",
   "keywords": [
     "svg",
