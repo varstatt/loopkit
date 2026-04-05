@@ -1,0 +1,64 @@
+{
+  "name": "css-cover-art",
+  "version": "0.5.0",
+  "description": "Schema-driven cover art engine. Define covers as data, render to SVG, HTML, CSS, or React styles.",
+  "keywords": [
+    "cover-art",
+    "svg",
+    "generative",
+    "schema",
+    "css",
+    "illustration",
+    "background",
+    "data-visualization"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varstatt/css-cover-art.git"
+  },
+  "homepage": "https://github.com/varstatt/css-cover-art#readme",
+  "bugs": {
+    "url": "https://github.com/varstatt/css-cover-art/issues"
+  },
+  "author": "Jurij Tokarski <jurij@varstatt.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --modulePaths=src",
+    "test:coverage": "jest --modulePaths=src --coverage",
+    "test:watch": "jest --modulePaths=src --watch",
+    "lint": "biome check src/",
+    "format": "biome check --write src/",
+    "prepack": "npm run build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.0.0",
+    "jest": "^30.0.0",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.8.0"
+  }
+}
