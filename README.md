@@ -1,8 +1,8 @@
-# loopkit
+# [loopkit](https://varstatt.com/toolkit/loopkit)
 
-Lightweight, zero-dependency SVG animation engine for the web. Define animations as plain JS objects, get smooth `requestAnimationFrame`-driven playback.
+Lightweight, zero-dependency SVG animation engine for the web. Define animations as plain JS objects, get smooth `requestAnimationFrame`-driven playback. Built as a Lottie alternative for short decorative animations — cover art, hero graphics, hover effects. Under 5KB minified.
 
-Built as a Lottie alternative for short decorative animations — cover art, hero graphics, hover effects. Under 5KB minified.
+- [Live Playground](https://varstatt.com/toolkit/loopkit)
 
 ## Install
 
@@ -93,6 +93,7 @@ const svgMarkup = renderToString(schema);
 
 Built and maintained by [Jurij Tokarski](https://varstatt.com/jurij) from [Varstatt](https://varstatt.com). MIT licensed.
 
+- [Playground](https://varstatt.com/toolkit/loopkit)
 - [GitHub](https://github.com/varstatt/loopkit)
 - [npm](https://www.npmjs.com/package/loopkit)
 - [Issues](https://github.com/varstatt/loopkit/issues)
